@@ -1,0 +1,1 @@
+import {Router} from 'express';import {generateCitation,getCitation} from '../controllers/reportController.js';import {protect,allowRoles} from '../middleware/authMiddleware.js';const router=Router();router.use(protect);router.post('/:violationId',allowRoles('admin','inspector'),generateCitation);router.get('/:violationId',getCitation);export default router;
