@@ -1,0 +1,11 @@
+# ZIP files
+*.zip
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+
+# Build
+dist/
