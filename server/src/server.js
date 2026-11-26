@@ -23,9 +23,25 @@ const errorMiddleware = require("./middleware/errorMiddleware");
 const app = express();
 
 // GLOBAL MIDDLEWARE
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://hoa-bylaw-violation-monitor-syc1.vercel.app",
+  ...(process.env.CLIENT_URL || "")
+    .split(",")
+    .map((url) => url.trim())
+    .filter(Boolean)
+];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true
   })
 );
